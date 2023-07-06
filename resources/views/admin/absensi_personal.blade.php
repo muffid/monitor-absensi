@@ -48,7 +48,7 @@
                     <div>
                         <h1 class="text-3xl">{{$data['nama']}}</h1>
                         <h1 class="text-sm text-slate-500">{{$data['nama_lengkap']}}</h1>
-                        <h1>Month : {{$data['date']}}</h1>
+                        <h1>Periode : {{$data['date_str']}}</h1>
                     </div>
                 </div>
                 <button onclick="exportToExcel()" class="py-1 rounded px-3 bg-cyan-700"><i class='bx bxs-file-export'></i> <span class="text-sm">Export</span></button>
@@ -97,10 +97,10 @@
                    for($i = 0; $i<sizeof($data['tabel']['Tanggal']); $i++){ ?>
                    
                     <tr>
-                        <td class="px-6 py-4 whitespace-no-wrap">
+                        <td class="pl-6 py-4 whitespace-no-wrap">
                          {{$i+1}}
                         </td>
-                        <td class="px-6 py-4 whitespace-no-wrap">
+                        <td class="pl-6 py-4 whitespace-no-wrap">
                           {{$data['tabel']['Tanggal'][$i]}}
                         </td>
                     
@@ -133,40 +133,51 @@
                 <?php } $no++; ?>
                
                     <tr class="text-green-500">
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" py-2 px-6 ">Total (jam) </td>
-                        <td class="py-2 px-6">{{$data['rekap']['Total_Actual']}}</td>
+                        <td class=" text-center bg-slate-800 p-2 " colspan="10"></td>
+                       
+                   
                     </tr>
                     <tr class="text-green-500">
+                      <td class=" text-center"></td>
+                      <td class="  px-4 py-4" colspan="5">Data Rangkuman</td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" py-2 px-6 ">kerja normal (jam)</td>
-                        <td class="py-2 px-6">{{$data['rekap']['Total_Jam']}}</td>
+                      
                     </tr>
-                    <tr class="text-green-500">
+                    <tr class="text-slate-400 text-sm">
+                      <td class=" text-center"></td>
+                      <td class=" py-2 pl-6 font-bold ">Total (jam) </td>
+                      <td class="py-2 px-6">{{$data['rekap']['Total_Actual']}}</td>
+                        <td class=" pl-6 py-2 font-bold">Total Hadir (hari)</td>
+                        <td class=" pl-6 py-2">{{$data['rekap']['Total_Hadir']}}</td>
+                        <td class=" pl-6 font-bold" colspan="2">Total Izin</td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
+                    </tr>
+                    <tr class="text-slate-400 text-sm">
+                      <td class=" text-center"></td>
+                      <td class=" py-2 pl-6 font-bold ">kerja normal (jam)</td>
+                      <td class="py-2 px-6">{{$data['rekap']['Total_Jam']}}</td>
+                        <td class=" pl-6 font-bold">Total Alfa (hari)</td>
+                        <td class=" pl-6">{{$data['rekap']['Total_Alfa']}}</td>
+                     
+                        <td class="pl-6 font-bold">Total hari izin</td>
+                        <td class=" text-center"></td>
+                    </tr>
+                    <tr class="text-slate-400 text-sm">
+                      <td class=" text-center"></td>
+                      <td class=" py-2 pl-6 font-bold">overtime (jam)</td>
+                      <td class="py-2 px-6">{{$data['rekap']['Total_Over']}}</td>
+                      <td class=" pl-6 font-bold">Rata rata Kehadiran </td>
+                    
+                      <td class=" pl-6 py-2">{{$data['rekap']['Avg_Hadir']}}</td>
+                        <td class=" pl-6 font-bold py-2">Tot Pelangaran Istirahat (menit)</td>
+                        <td class="pl-6">{{$data['rekap']['Total_Pelanggaran']}}</td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" text-center"></td>
-                        <td class=" py-2 px-6 ">overtime (jam)</td>
-                        <td class="py-2 px-6">{{$data['rekap']['Total_Over']}}</td>
                     </tr>
                     <!-- Tambahkan baris lainnya sesuai dengan data yang Anda miliki -->
                   </tbody>
@@ -174,7 +185,7 @@
 
         
               </div>
-              Shortcut :
+             <h1 class="mt-6">Shortcut :</h1>
              <div class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-4">
                  @foreach($data['karyawan'] as $k)
                     <div onclick="event.preventDefault(); window.location.href = '{{ route('info', ['id' => encrypt($k['id']), 'date' => $data['date']]) }}';" class="bg-slate-800 px-3 py-2 gap-2 flex flex-row items-center cursor-pointer hover:scale-110 transition-transform duration-75">

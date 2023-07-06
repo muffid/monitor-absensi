@@ -36,8 +36,47 @@ class AbsensiController extends Controller
         return $karyawan;
     }
 
-    private function getAbsensiByMonth($month){
-
+    private function getNamaBulan($bulan){
+        $namaBulan = "";
+        switch($bulan){
+            case 1:
+                $namaBulan = "Januari";
+                break;
+            case 2:
+                $namaBulan = "Februari";
+                break;
+            case 3:
+                $namaBulan = "Maret";
+                break;
+            case 4:
+                $namaBulan = "April";
+                break;
+            case 5:
+                $namaBulan = "Mei";
+                break;
+            case 6:
+                $namaBulan = "Juni";
+                break;
+            case 7:
+                $namaBulan = "Juli";
+                break;
+            case 8:
+                $namaBulan = "Agustus";
+                break;
+            case 9:
+                $namaBulan = "September";
+                break;
+            case 10:
+                $namaBulan = "Oktober";
+                break;
+            case 11:
+                $namaBulan = "November";
+                break;
+            case 12:
+                $namaBulan = "Desember";
+                break;
+        }
+        return $namaBulan;
     }
 
     
@@ -79,6 +118,7 @@ class AbsensiController extends Controller
        
         $absensi = AbsensiModel::where('id_user', $id)->where('tanggal','like',$date.'%')->where('pulang','not like',"")->orderBy('tanggal', 'asc')->get();
         $normalKerja = 8;
+        $maxRehat = 60;
         $dataTable = [];
         $arrTanggal = [];
         $arrMasuk = [];
@@ -90,6 +130,7 @@ class AbsensiController extends Controller
         $arrOvertimeJamOnly = [];
         $arrLamaRehatJamOnly = [];
         $arrLamaRehatMinOnly = [];
+        $totPelanggaran = 0;
         
             foreach ($absensi as $data) {
                 $arrTanggal [] = $data->tanggal;
@@ -97,7 +138,7 @@ class AbsensiController extends Controller
                 $arrPulang [] = $data->pulang;
                 $arrRehat [] = $data->rehat;
                 $arrKembali [] = $data->kembali;
-                //jika ada istirahat
+                //jika tidak ada istirahat
                 if($data->rehat === "0"){
                     $jamMasuk = Carbon::createFromFormat('H:i', $data->masuk);
                     $jamPulang = Carbon::createFromFormat('H:i', $data->pulang);
@@ -120,7 +161,7 @@ class AbsensiController extends Controller
                     
                 }else{
 
-                    //jika ada istirahat
+                    //jika  ada istirahat
                     $jamMasuk = Carbon::createFromFormat('H:i', $data->masuk);
                     $jamPulang = Carbon::createFromFormat('H:i', $data->pulang);
                     $selisihKerja = $jamMasuk->diffInMinutes($jamPulang);
@@ -128,6 +169,10 @@ class AbsensiController extends Controller
                     $jamRehat = Carbon::createFromFormat('H:i', $data->rehat);
                     $jamKembali = Carbon::createFromFormat('H:i', $data->kembali);
                     $selisihRehat = $jamRehat->diffInMinutes($jamKembali);
+                    
+                    if($selisihRehat > $maxRehat){
+                        $totPelanggaran += $selisihRehat - $maxRehat;
+                    }
 
                     $hoursSelRehat = floor($selisihRehat / 60);
                     $minutesSelRehat = $selisihRehat % 60;
@@ -168,9 +213,33 @@ class AbsensiController extends Controller
                 'Min_Rehat' => $arrLamaRehatMinOnly,
             ];
 
+           
+            $tahun = explode("-", $date)[0];
+            $bulan = explode("-", $date)[1];
+            $namaBulan = $this->getNamaBulan($bulan);
+          
+            //hari yang bolong
+            $startDate = Carbon::create($tahun, $bulan, 1)->startOfMonth();
+            $endDate = Carbon::create($tahun, $bulan, 1)->endOfMonth();
+            $dateRange = [];
+            for ($theDate = $startDate; $theDate->lte($endDate); $theDate->addDay()) {
+                $dateRange[] = $theDate->format('Y-m-d');
+            }
+            $missingDates = array_diff($dateRange, $arrTanggal);
+
+           
+
+
             $tot_Jam = 0;
             $tot_actual = 0;
             $tot_overtime = 0;
+            $tot_kehadiran = sizeof($absensi);
+            $tot_bolong = sizeof($missingDates);
+            $avHadir = round($tot_kehadiran / sizeof($dateRange),2);
+          
+            
+         
+
             foreach($arrJamNormalKerja as $tot){
                 $tot_Jam +=$tot;
             }
@@ -185,6 +254,10 @@ class AbsensiController extends Controller
                 'Total_Jam' => $tot_Jam,
                 'Total_Actual' => $tot_actual,
                 'Total_Over' => $tot_overtime,
+                'Total_Hadir' => $tot_kehadiran,
+                'Total_Alfa' => $tot_bolong,
+                'Total_Pelanggaran' => $totPelanggaran,
+                'Avg_Hadir' => $avHadir,
             ];
             // dd($arrOvertimeJamOnly);
            
@@ -203,6 +276,7 @@ class AbsensiController extends Controller
             'nama' => $arrKaryawan[0]['username'],
             'nama_lengkap' => $arrKaryawan[0]['nama_lengkap'],
             'img' =>$avatarUrl,
+            'date_str' => $namaBulan." - ".$tahun,
             'date' => $date,
             'karyawan' => $this->getAllKaryawan(), 
             'tabel' => $dataTable,
@@ -307,6 +381,7 @@ class AbsensiController extends Controller
             $tot_Jam = 0;
             $tot_actual = 0;
             $tot_overtime = 0;
+           
             foreach($arrJamNormalKerja as $tot){
                 $tot_Jam +=$tot;
             }
