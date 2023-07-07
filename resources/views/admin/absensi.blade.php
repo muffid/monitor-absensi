@@ -42,7 +42,7 @@
           <div class="grid  grid-cols-1 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 w-full gap-4 md:gap-8">
             @foreach ($data['karyawan'] as $key => $value)
                 <?php $encryptId = encrypt($value['id']); ?>
-                <div onclick="event.preventDefault(); window.location.href = '{{ route('info', ['id' => $encryptId, 'date' => $data['date']]) }}';" class="flex flex-row items-center p-4 gap-4 rounded hover:shadow-xl shadow-slate-950 bg-slate-900 cursor-pointer hover:scale-105 transition-transform ease-out">
+                <div onclick="event.preventDefault(); window.location.href = '{{ route('info', ['id' => $encryptId, 'date' => $data['date']]) }}';" class="flex flex-row items-center p-4 gap-4 rounded-lg hover:shadow-xl shadow-slate-950 bg-slate-900 cursor-pointer hover:scale-105 transition-transform ease-out">
                     <img src={{$value['img']}} alt="logo" class="w-16 h-full object-cover rounded-full">
                     <div class="flex flex-col items-start">
                         <h1 class="text-xl font-bold">{{$value['nama']}}</h1>

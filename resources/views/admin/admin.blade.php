@@ -47,7 +47,7 @@
                         <?php 
                             $email = $value['nama']; // Ganti dengan alamat email yang sesuai
                             $hash = md5(strtolower(trim($email)));
-                            $avatarUrl = "https://www.gravatar.com/avatar/{$hash}?d=retro";
+                            $avatarUrl = $value['img'];
                         ?>
                         <img src={{$avatarUrl}} alt="logo" class="w-full h-full rounded-full object-cover">
                     </div>

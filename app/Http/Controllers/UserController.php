@@ -19,8 +19,8 @@ class UserController extends Controller
             $id_user = $user->id;
             $username = $user->username;
             $nama_lengkap = $user->nama_lengkap;
-            $hash = md5(strtolower(trim($username)));
-            $avatarUrl = "https://www.gravatar.com/avatar/{$hash}?d=retro";
+         
+            $avatarUrl = $user->img;
         $absensi = AbsensiModel::where('id_user', $id_user)->where('tanggal','like',$formattedDate)->first();
         $status = '';
         $timeCounter = '';

@@ -38,7 +38,7 @@
           {{-- content --}}
           <div class="flex flex-col gap-3">
             <div class="flex flex-col items-center gap-1 mt-4">
-                <img src={{$data['img']}} alt="logo" class="w-16 h-16 rounded-full object-cover">
+                <img src={{$data['img']}} alt="logo" class="w-20 h-20 rounded-full object-cover">
                 <h1 class="text-2xl font-bold text-center mt-2">{{$data['username']}}</h1>
                 <h1 class="text-center text-sm text-slate-500">{{$data['nama_lengkap']}}</h1>
 
@@ -82,11 +82,7 @@
                     </div>
                 </div>
                 <h1 id="reload-message" class="text-xs text-slate-400 mt-4"></h1>
-                <h1 class="mt-12 text-yellow-300">  📌 informasi</h1>
-                <p class="text-center text-xs text-slate-500">- Jam kerja dihitung berdasarkan satuan jam (bukan menit).</p>
-                <p class="text-center text-xs text-slate-500">- Overtime hanya dihitung ketika melebihi 60 menit (1 jam)</p>
-                <p class="text-center text-xs text-slate-500">- jika durasi istirahat tidak melebihi 30 menit, maka tidak mengurangi total jam kerja</p>
-                <p class="text-center text-xs text-slate-500">- Jam kerja baru akan dikurangi setelah durasi istirahat melebihi 30 menit</p>
+                
             </div>
           </div>
         

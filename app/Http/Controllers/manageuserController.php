@@ -24,13 +24,13 @@ class manageuserController extends Controller
             $id = $user->id;
             $nama = $user->username;
             $fullName = $user->nama_lengkap;
-            $hash = md5(strtolower(trim($nama)));
-            $avatarUrl = "https://www.gravatar.com/avatar/{$hash}?d=retro";
+            $img = $user->img;
+         
             $data = [
                 'id' => $id,
                 'nama' => $nama,
                 'full_name' => $fullName,
-                'img' => $avatarUrl,
+                'img' => $img,
             ];
 
             $karyawan[] = $data;

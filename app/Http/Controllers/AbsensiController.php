@@ -263,18 +263,19 @@ class AbsensiController extends Controller
        
         $karyawan = User::where('id','like',$id)->get();
         $arrKaryawan=$karyawan->toArray();
-        $hash = md5(strtolower(trim($arrKaryawan[0]['username'])));
-        $avatarUrl = "https://www.gravatar.com/avatar/{$hash}?d=retro";
+       
         $user = user::where('id', session()->get('id'))->first();
         if($user){
             $username = $user->username;
+          
+           
         }
         $data = [
             'username' => $username,
             'id' => $id,
             'nama' => $arrKaryawan[0]['username'],
             'nama_lengkap' => $arrKaryawan[0]['nama_lengkap'],
-            'img' =>$avatarUrl,
+            'img' =>$arrKaryawan[0]['img'],
             'date_str' => $namaBulan." - ".$tahun,
             'date' => $date,
             'karyawan' => $this->getAllKaryawan(), 
@@ -401,8 +402,8 @@ class AbsensiController extends Controller
        
         $karyawan = User::where('id','like',session()->get('id'))->get();
         $arrKaryawan=$karyawan->toArray();
-        $hash = md5(strtolower(trim($arrKaryawan[0]['username'])));
-        $avatarUrl = "https://www.gravatar.com/avatar/{$hash}?d=retro";
+        
+        $avatarUrl = $arrKaryawan[0]['img'];
         $user = user::where('id', session()->get('id'))->first();
         if($user){
             $username = $user->username;
