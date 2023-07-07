@@ -65,7 +65,7 @@
                         Tanggal
                       </th>
                       <th class="px-6 py-3 bg-slate-700 text-left text-xs leading-4 font-medium text-gray-50 uppercase tracking-wider">
-                        Absen
+                        Masuk
                       </th>
                       <th class="px-6 py-3 bg-slate-700 text-left text-xs leading-4 font-medium text-gray-50 uppercase tracking-wider">
                         Pulang
@@ -139,13 +139,13 @@
                     </tr>
                     <tr class="text-green-500">
                       <td class=" text-center"></td>
-                      <td class="  px-4 py-4" colspan="5">Data Rangkuman</td>
+                      <td class="  px-4 py-4" colspan="5">Data Rangkuman {{$data['nama']}}</td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
                       
                     </tr>
-                    <tr class="text-slate-400 text-sm">
+                    <tr class="text-slate-400">
                       <td class=" text-center"></td>
                       <td class=" py-2 pl-6 font-bold ">Total (jam) </td>
                       <td class="py-2 px-6">{{$data['rekap']['Total_Actual']}}</td>
@@ -156,23 +156,23 @@
                         <td class=" text-center"></td>
                         <td class=" text-center"></td>
                     </tr>
-                    <tr class="text-slate-400 text-sm">
+                    <tr class="text-slate-400">
                       <td class=" text-center"></td>
                       <td class=" py-2 pl-6 font-bold ">kerja normal (jam)</td>
                       <td class="py-2 px-6">{{$data['rekap']['Total_Jam']}}</td>
-                        <td class=" pl-6 font-bold">Total Alfa (hari)</td>
+                        <td class=" pl-6 font-bold">Total Absen (hari)</td>
                         <td class=" pl-6">{{$data['rekap']['Total_Alfa']}}</td>
                      
                         <td class="pl-6 font-bold">Total hari izin</td>
                         <td class=" text-center"></td>
                     </tr>
-                    <tr class="text-slate-400 text-sm">
+                    <tr class="text-slate-400">
                       <td class=" text-center"></td>
                       <td class=" py-2 pl-6 font-bold">overtime (jam)</td>
                       <td class="py-2 px-6">{{$data['rekap']['Total_Over']}}</td>
                       <td class=" pl-6 font-bold">Rata rata Kehadiran </td>
                     
-                      <td class=" pl-6 py-2">{{$data['rekap']['Avg_Hadir']}}</td>
+                      <td class=" pl-6 py-2">{{$data['rekap']['Avg_Hadir']}} %</td>
                         <td class=" pl-6 font-bold py-2">Tot Pelangaran Istirahat (menit)</td>
                         <td class="pl-6">{{$data['rekap']['Total_Pelanggaran']}}</td>
                         <td class=" text-center"></td>
