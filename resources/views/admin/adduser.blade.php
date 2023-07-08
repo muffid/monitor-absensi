@@ -42,6 +42,17 @@
                 <input required type="text" name="id" id="id" placeholder="id" class='w-full p-2 border rounded border-slate-700 focus:outline-none bg-transparent text-slate-400' />
                 <input required type="text" name="username" id="username" placeholder="username" class='w-full p-2 border rounded border-slate-700 focus:outline-none bg-transparent text-slate-400 ' />
                 <input required type="text" name="nama_lengkap" id="nama_lengkap" placeholder="nama lengkap" class='w-full p-2 border rounded border-slate-700 focus:outline-none bg-transparent text-slate-400 ' />
+                <div class="space-x-2 text-sm">
+                    <label for="user" class="inline-flex items-center">
+                      <input  type="radio" id="user" name="role" value="user" class="form-radio text-indigo-600">
+                      <span class="ml-2 cursor-pointer">Karyawan</span>
+                    </label>
+                    <label for="magang" class="inline-flex items-center">
+                      <input type="radio" id="magang" name="role" value="magang" class="form-radio text-indigo-600">
+                      <span class="ml-2 cursor-pointer">Magang</span>
+                    </label>
+                  </div>
+                
                 <div class="relative">
                     <input type="file" id="file" name="image" class="opacity-0 absolute left-0 top-0 w-full "
                       onchange="previewFile()">

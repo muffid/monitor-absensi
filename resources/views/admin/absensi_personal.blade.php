@@ -44,7 +44,7 @@
          <div class="flex flex-col items-start gap-8 xl:px-8 mt-8">
             <div class="flex flex-row items-end justify-between w-full">
                 <div class="flex flex-row items-center gap-4">
-                    <img src={{$data['img']}} alt="logo" class="w-16 h-full object-cover rounded-full">
+                    <img src={{$data['img']}} alt="logo" class="w-16 h-16 object-cover rounded-full">
                     
                     <div>
                         <h1 class="text-3xl">{{$data['nama']}}</h1>
@@ -189,6 +189,14 @@
              <h1 class="mt-6">Shortcut :</h1>
              <div class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-4">
                  @foreach($data['karyawan'] as $k)
+                    <div onclick="event.preventDefault(); window.location.href = '{{ route('info', ['id' => encrypt($k['id']), 'date' => $data['date']]) }}';" class="bg-slate-900 px-3 py-2 gap-2 flex flex-row items-center rounded-lg cursor-pointer hover:scale-110 transition-transform duration-75">
+                        <img src={{$k['img']}} alt="logo" class="w-8 h-8 object-cover rounded-full">
+                        <h1>{{$k['nama']}}</h1>
+                    </div>
+                @endforeach
+             </div>
+             <div class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-4">
+                 @foreach($data['magang'] as $k)
                     <div onclick="event.preventDefault(); window.location.href = '{{ route('info', ['id' => encrypt($k['id']), 'date' => $data['date']]) }}';" class="bg-slate-900 px-3 py-2 gap-2 flex flex-row items-center rounded-lg cursor-pointer hover:scale-110 transition-transform duration-75">
                         <img src={{$k['img']}} alt="logo" class="w-8 h-8 object-cover rounded-full">
                         <h1>{{$k['nama']}}</h1>

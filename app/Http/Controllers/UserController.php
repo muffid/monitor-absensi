@@ -193,6 +193,8 @@ class UserController extends Controller
     }
 
     public function addUser(Request $request){
+
+      
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             
@@ -225,7 +227,7 @@ class UserController extends Controller
                     $password = "111";
                     $fullName = $request->input('nama_lengkap');
                     $img = $responseData['image']['url'];
-                    $role = "user";
+                    $role = $request->input('role');
                 
                     $user = new User();
                     $user->id = $id;

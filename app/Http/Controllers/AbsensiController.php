@@ -34,6 +34,25 @@ class AbsensiController extends Controller
         }
         return $karyawan;
     }
+    private function getAllMagang(){
+        $karyawan=[];
+        $users = User::where('role','like','magang')->get();
+        foreach ($users as $user) {
+            $id = $user->id;
+            $nama = $user->username;
+            $fullName = $user->nama_lengkap;
+            $img = $user->img;
+            $data = [
+                'id' => $id,
+                'nama' => $nama,
+                'full_name' => $fullName,
+                'img' => $img,
+            ];
+
+            $karyawan[] = $data;
+        }
+        return $karyawan;
+    }
 
     private function getNamaBulan($bulan){
         $namaBulan = "";
@@ -279,6 +298,7 @@ class AbsensiController extends Controller
             'date_str' => $namaBulan." - ".$tahun,
             'date' => $date,
             'karyawan' => $this->getAllKaryawan(), 
+            'magang' => $this->getAllMagang(),
             'tabel' => $dataTable,
             'rekap' => $dataRekap,
         ];

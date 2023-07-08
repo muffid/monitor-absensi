@@ -48,7 +48,7 @@
         </div>
           {{-- content --}}
           <div class="xl:px-8 mt-8 flex flex-col gap-2">
-            <div class="w-full flex flex-row justify-end p-4">
+            <div class="w-full flex flex-row justify-end p-4 max-w-[1200px] mx-auto">
               <button class="py-2 px-4 rounded-lg bg-green-600 text-white text-sm" onclick="window.location.href = '{{ route('add') }}'">+ Tambah user</button>
             </div>
             <div class="flex flex-col items-start gap-4   ">
