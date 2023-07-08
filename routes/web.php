@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\manageuserController;
+use App\Http\Controllers\AddUserController;
+
 
 
 /*
@@ -34,6 +36,8 @@ Route::get('/info/{id}/date/{date}',[AbsensiController::class,'getInfo'])->middl
 Route::get('/admin',[AdminController::class,'index'])->middleware('isAdmin')->name('admin');
 Route::get('/absensi',[AbsensiController::class,'index'])->middleware('isAdmin')->name('absensi');
 Route::get('/manage-user',[manageuserController::class,'index'])->middleware('isAdmin')->name('manage');
+Route::get('/add-user',[AddUserController::class,'index'])->middleware('isAdmin')->name('add');
+Route::post('/upload',[UserController::class,'addUser'])->middleware('isAdmin')->name('upload');
 
 
 Route::get('/user',[UserController::class,'index'])->middleware('isUser')->name('user');

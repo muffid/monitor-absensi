@@ -11,6 +11,8 @@ class user extends Model
     use HasFactory;
     protected $table = 'user';
     protected $keyType = 'string';
+    public $timestamps = false;
+
 
     protected $fillable = [
         'id',
@@ -18,7 +20,7 @@ class user extends Model
         'password',
         'nama_lengkap',
         'img',
-        'role'
+        'role',
     ];
     
 }

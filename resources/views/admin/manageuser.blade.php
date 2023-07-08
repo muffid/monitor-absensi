@@ -47,24 +47,29 @@
             @include('admin.sidebar')
         </div>
           {{-- content --}}
-            <div class="flex flex-col items-start gap-4 xl:px-8 mt-8  ">
-                @foreach ($data['karyawan'] as $key => $value)
-                    <div class="flex flex-row justify-between items-center gap-4 px-4 py-2 rounded-lg bg-slate-900 w-full lg:max-w-[1200px] mx-auto">
-                        <div class=" flex flex-row items-center gap-2">
-                                <img src={{$value['img']}} alt="logo" class="w-12 h-full object-cover rounded-full">
-                                <h1 class="text-xl font-bold ml-8">{{$value['nama']}}</h1>
-                                <h1 class="text-slate-400 text-sm hidden lg:inline-block">{{$value['full_name']}}</h1>
-                                {{-- <h1 class="text-slate-500 text-xs">{{$value['id']}}</h1> --}}
-                            </div>
-                            <div class=" flex flex-row items-center gap-4 text-xs">
-                                <h1 onclick="showConfirmation({{$value['id']}},'reset')" class="py-1 px-2 border border-orange-500 rounded cursor-pointer" title="reset password"><i class='bx bxs-key'></i></h1>
-                                <h1 class="py-1 px-2 border border-green-600 rounded cursor-pointer" title="edit user"><i class='bx bxs-user-detail'></i></h1>
-                                <h1 class="py-1 px-2 border border-yellow-600 rounded cursor-pointer" title="ganti kartu"><i class='bx bx-transfer'></i></h1>
-                                <h1 class="py-1 px-2 border border-red-600 rounded cursor-pointer" title="hapus kartu"><i class='bx bxs-trash'></i></h1>
-                            </div>
-                    </div>
-                @endforeach
+          <div class="xl:px-8 mt-8 flex flex-col gap-2">
+            <div class="w-full flex flex-row justify-end p-4">
+              <button class="py-2 px-4 rounded-lg bg-green-600 text-white text-sm" onclick="window.location.href = '{{ route('add') }}'">+ Tambah user</button>
             </div>
+            <div class="flex flex-col items-start gap-4   ">
+              @foreach ($data['karyawan'] as $key => $value)
+              <div class="flex flex-row justify-between items-center gap-4 px-4 py-2 rounded-lg bg-slate-900 w-full lg:max-w-[1200px] mx-auto">
+                <div class=" flex flex-row items-center gap-2">
+                  <img src={{$value['img']}} alt="logo" class="w-12 h-full object-cover rounded-full">
+                  <h1 class="text-xl font-bold ml-8">{{$value['nama']}}</h1>
+                  <h1 class="text-slate-400 text-sm hidden lg:inline-block">{{$value['full_name']}}</h1>
+                  {{-- <h1 class="text-slate-500 text-xs">{{$value['id']}}</h1> --}}
+                </div>
+                <div class=" flex flex-row items-center gap-4 text-xs">
+                  <h1 onclick="showConfirmation({{$value['id']}},'reset')" class="py-1 px-2 border border-orange-500 rounded cursor-pointer" title="reset password"><i class='bx bxs-key'></i></h1>
+                  <h1 class="py-1 px-2 border border-green-600 rounded cursor-pointer" title="edit user"><i class='bx bxs-user-detail'></i></h1>
+                  <h1 class="py-1 px-2 border border-yellow-600 rounded cursor-pointer" title="ganti kartu"><i class='bx bx-transfer'></i></h1>
+                  <h1 class="py-1 px-2 border border-red-600 rounded cursor-pointer" title="hapus kartu"><i class='bx bxs-trash'></i></h1>
+                </div>
+              </div>
+              @endforeach
+            </div>
+          </div>
     </body>
     <script>
       function exportToExcel() {

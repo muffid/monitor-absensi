@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\user;
+use App\Models\User;
 use App\Models\AbsensiModel;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Exception;
 
 class UserController extends Controller
 {
@@ -188,5 +190,65 @@ class UserController extends Controller
       
         return view('user/user',compact('data'));
         // return "system under development, be patient :)";
+    }
+
+    public function addUser(Request $request){
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'multipart' => [
+                    [
+                        'name'     => 'key',
+                        'contents' => '6d207e02198a847aa98d0a2a901485a5', // Ganti dengan kunci API FreeImage.Host Anda
+                    ],
+                    [
+                        'name'     => 'action',
+                        'contents' => 'upload',
+                    ],
+                    [
+                        'name'     => 'source',
+                        'contents' => fopen($file->getPathname(), 'r'),
+                    ],
+                ],
+            ]);
+    
+            $responseData = json_decode($response->getBody(), true);
+    
+         
+            // Lakukan sesuatu dengan data respons, misalnya tampilkan URL gambar
+            if ($responseData['status_code'] == 200) {
+                try{
+                    $id = $request->input('id');
+                    $username = $request->input('username');
+                    $password = "111";
+                    $fullName = $request->input('nama_lengkap');
+                    $img = $responseData['image']['url'];
+                    $role = "user";
+                
+                    $user = new User();
+                    $user->id = $id;
+                    $user->username = $username;
+                    $user->password = $password;
+                    $user->nama_lengkap = $fullName;
+                    $user->img = $img;
+                    $user->role = $role;
+                    
+                    $user->save();
+                    $request->session()->flash('success', 'berhasil tersimpan');
+                    return redirect()->route('add');
+                }catch(Exception $e){
+                   
+                    $request->session()->flash('fail', 'Gagal menyimpan');
+                    return redirect()->route('add');
+                }
+             
+            
+            } else {
+                $request->session()->flash('fail', 'Gagal menyimpan');
+                    return redirect()->route('add');
+            }
+        }
     }
 }
